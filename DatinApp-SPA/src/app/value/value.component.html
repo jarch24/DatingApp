@@ -1,0 +1,8 @@
+<p>
+  value works!
+</p>
+
+<input name="username" #name="ngModel" [(ngModel)]="query" (keyup)="getValuesByName(name.value)" />
+<ul *ngFor="let val of values">
+  <li>{{val.name}}</li>
+</ul>
