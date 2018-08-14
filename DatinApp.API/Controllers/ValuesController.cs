@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatinApp.API.Data;
 using DatinApp.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
-    [Route("api/values/[action]")]
+    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -22,13 +24,13 @@ namespace DatingApp.API.Controllers
 
         }
         // GET api/values
-        [HttpGet]
+        [HttpGet("get")]        
         public IActionResult Get()
         {
             return Ok(_db.Value.ToList());
         }
 
-        [HttpGet("{query}")]
+        [HttpGet("getval")]        
         public async Task<IActionResult> GetValues(string query)
         {
             if(String.IsNullOrEmpty(query)){
@@ -38,7 +40,8 @@ namespace DatingApp.API.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Get(int id)
         {
             
@@ -47,7 +50,8 @@ namespace DatingApp.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] Value val)
+        
+        public void Post(Value val)
         {
             if(val != null)
             {

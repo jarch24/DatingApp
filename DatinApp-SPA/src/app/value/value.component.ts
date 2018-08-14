@@ -24,7 +24,6 @@ export class ValueComponent implements OnInit {
     });
   }
   getValuesByName(query: string) {
-      console.log(query);
       this.http.get('http://localhost:5000/api/values/getValues/' + query).subscribe(response => {
         this.values = response;
       },
